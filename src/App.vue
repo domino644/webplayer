@@ -1,5 +1,5 @@
 <template>
-  <cover v-bind:img="dupa"></cover>
+  <cover imgA="dupa"></cover>
 </template>
 
 <script>
