@@ -1,9 +1,12 @@
 <template>
-  <div>tu bedzie kiedys webplayer, tak za 2 dni jakos</div>
+  <cover v-bind:img="dupa"></cover>
 </template>
 
 <script>
-export default {};
+import Cover from "./components/Cover.vue";
+export default {
+  components: { Cover },
+};
 </script>
 
 <style>
