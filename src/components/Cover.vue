@@ -1,6 +1,6 @@
 <template>
   <span>
-    <img v-bind:src="getSrc" alt="cos sie popsulo" />
+    <img v-bind:src="getCoverSrc" alt="cos sie popsulo" />
   </span>
 </template>
 
@@ -13,12 +13,15 @@ export default {
   },
   props: ["propsId"],
   computed: {
-    getAlbum() {
-      return this.$store.getters.getAllAlbums[this.id];
+    getCurrentAlbum() {
+      return this.$store.getters.getCurrentAlbumIndex;
     },
-    getSrc() {
+    getSong(){
+      return this.$store.getters.getAllSongs
+    },
+    getCoverSrc() {
       return encodeURI(
-        `http://localhost:3000/static/mp3/${this.getAlbum}/cover.jpg`
+        `http://localhost:3000/static/mp3/${this.getCurrentAlbum}/${this.getSong}`
       );
     },
   },
@@ -27,6 +30,7 @@ export default {
 
 <style scoped>
 img {
+  margin-top: 5px;
   width: 200px;
   height: 200px;
 }

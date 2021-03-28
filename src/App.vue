@@ -8,7 +8,10 @@
           :props-id="index"
         ></cover>
       </div>
-      <div id="cont-songs"></div>
+      <div id="cont-songs">
+        <h1>MASNY MUZ</h1>
+        <song></song>
+      </div>
     </div>
     <div id="control-panel">
       <div id="back-button">
@@ -38,16 +41,18 @@
 
 <script>
 import Cover from "./components/Cover.vue";
+import Song from "./components/Song.vue";
 export default {
   components: {
     Cover,
+    Song,
   },
   mounted() {
     this.$store.dispatch("action_getAlbumsFirst");
   },
   computed: {
     getAlbums() {
-      console.log(this.$store.getters.getAllAlbums + " albumy");
+      //console.log(this.$store.getters.getAllAlbums + " albumy");
       return this.$store.getters.getAllAlbums;
     },
   },
@@ -65,6 +70,11 @@ export default {
   font-family: inherit;
   font-size: 100%;
   scrollbar-width: 1px;
+}
+h1 {
+  font-size: 40px;
+  position: absolute;
+  top: 0px;
 }
 #main {
   width: 100%;
@@ -93,18 +103,20 @@ export default {
   float: left;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #728a94;
+  background-color: black;
 }
 #cont-songs {
   width: auto;
   height: 100%;
-  background-color: #948184;
+  background-color: #728a94;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .control-panel-button {
-  width: 50px;
-  height: 50px;
+  width: 4rem;
+  height: 4rem;
 }
 #play-pause-button {
   margin-left: 10px;
