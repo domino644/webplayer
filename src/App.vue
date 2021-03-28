@@ -2,12 +2,11 @@
   <div id="main">
     <div id="cont">
       <div id="cont-albums">
-        <div class="klocek-testowy"></div>
-        <div class="klocek-testowy"></div>
-        <div class="klocek-testowy"></div>
-        <div class="klocek-testowy"></div>
-        <div class="klocek-testowy"></div>
-        <div class="klocek-testowy"></div>
+        <cover
+          v-for="(album, index) in getAlbums"
+          :key="index"
+          :props-id="index"
+        ></cover>
       </div>
       <div id="cont-songs"></div>
     </div>
@@ -38,7 +37,21 @@
 </template>
 
 <script>
-export default {};
+import Cover from "./components/Cover.vue";
+export default {
+  components: {
+    Cover,
+  },
+  mounted() {
+    this.$store.dispatch("action_getAlbumsFirst");
+  },
+  computed: {
+    getAlbums() {
+      console.log(this.$store.getters.getAllAlbums + " albumy");
+      return this.$store.getters.getAllAlbums;
+    },
+  },
+};
 </script>
 
 <style>
@@ -75,7 +88,7 @@ export default {};
   align-items: center;
 }
 #cont-albums {
-  height: 814px;
+  height: 614px;
   width: 200px;
   float: left;
   overflow-y: scroll;
@@ -96,9 +109,5 @@ export default {};
 #play-pause-button {
   margin-left: 10px;
   margin-right: 10px;
-}
-.klocek-testowy {
-  height: 200px;
-  width: 200px;
 }
 </style>
