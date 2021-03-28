@@ -1,10 +1,9 @@
 <template>
-  <h1>{{ imgA }}</h1>
+  
 </template>
 
 <script>
 export default {
-  props: ["imgA"],
 };
 </script>
 
