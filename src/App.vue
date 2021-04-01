@@ -9,32 +9,47 @@
         ></cover>
       </div>
       <div id="cont-songs">
-        <h1>MASNY MUZ</h1>
-        <song></song>
+        <span class="h1-cont">
+          <h1>MASNY MUZ</h1>
+        </span>
+        <span class="span-songs">
+          <song
+            v-for="(song, index) in getSongs"
+            :key="index"
+            :props-id="index"
+          ></song>
+        </span>
       </div>
     </div>
     <div id="control-panel">
-      <div id="back-button">
-        <img
-          class="control-panel-button"
-          src="../public/gpx/back-button.png"
-          alt="cos sie popsulo"
-        />
-      </div>
-      <div id="play-pause-button">
-        <img
-          class="control-panel-button"
-          src="../public/gpx/pause-button.png"
-          alt="cos sie popsulo"
-        />
-      </div>
-      <div id="forward-button">
-        <img
-          class="control-panel-button"
-          src="../public/gpx/forward-button.png"
-          alt="cos sie popsulo"
-        />
-      </div>
+      <span class="buttons">
+        <div id="back-button">
+          <img
+            class="control-panel-button"
+            src="../public/gpx/back-button.png"
+            alt="cos sie popsulo"
+          />
+        </div>
+        <div id="play-pause-button">
+          <img
+            class="control-panel-button"
+            src="../public/gpx/pause-button.png"
+            alt="cos sie popsulo"
+          />
+        </div>
+        <div id="forward-button">
+          <img
+            class="control-panel-button"
+            src="../public/gpx/forward-button.png"
+            alt="cos sie popsulo"
+          />
+        </div>
+      </span>
+      <span class="range-cont">
+        <span id="start-time">00:00</span>
+        <input type="range" name="song_range" id="song-range" value="0" />
+        <span id="end-time">03:01</span>
+      </span>
     </div>
   </div>
 </template>
@@ -55,7 +70,11 @@ export default {
       //console.log(this.$store.getters.getAllAlbums + " albumy");
       return this.$store.getters.getAllAlbums;
     },
+    getSongs() {
+      return this.$store.getters.getAllSongs;
+    },
   },
+  methods: {},
 };
 </script>
 
@@ -72,9 +91,10 @@ export default {
   scrollbar-width: 1px;
 }
 h1 {
-  font-size: 40px;
-  position: absolute;
+  font-size: 6vh;
+  position: fixed;
   top: 0px;
+  z-index: 1;
 }
 #main {
   width: 100%;
@@ -96,9 +116,10 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 #cont-albums {
-  height: 614px;
+  height: 85vh;
   width: 200px;
   float: left;
   overflow-y: scroll;
@@ -107,7 +128,7 @@ h1 {
 }
 #cont-songs {
   width: auto;
-  height: 100%;
+  height: 85vh;
   background-color: #728a94;
   display: flex;
   justify-content: center;
@@ -115,11 +136,37 @@ h1 {
   align-items: center;
 }
 .control-panel-button {
-  width: 4rem;
-  height: 4rem;
+  width: 6vh;
+  height: 6vh;
 }
 #play-pause-button {
   margin-left: 10px;
   margin-right: 10px;
+}
+.buttons {
+  display: flex;
+}
+.range-cont {
+  display: flex;
+}
+.range-cont > span {
+  font-size: 2vh;
+}
+#song-range {
+  margin-left: 3vh;
+  margin-right: 3vh;
+  width: 13vh;
+}
+.h1-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: auto;
+}
+.span-songs {
+  width: 100%;
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>

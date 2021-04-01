@@ -8,7 +8,8 @@ Vue.use(Vuex);
 const state = {
     albums: [],
     songs: [],
-    currentAlbum = 0
+    currentAlbum: 0,
+    currentSong: ""
 }
 
 
@@ -21,6 +22,9 @@ const getters = {
     },
     getCurrentAlbumIndex: function (state) {
         return state.currentAlbum
+    },
+    getCurrentSong: function (state) {
+        return state.currentSong
     }
 }
 
@@ -31,10 +35,17 @@ const actions = {
             .then(response => {
                 commit("SET_ALL_ALBUMS", response.data.folders)
                 commit("SET_ALL_SONGS", response.data.files)
-                console.log(state.songs)
+            })
+    },
+    action_getSongsNext({ commit }, album) {
+        axios.post("http://localhost:3000/next", album)
+            .then(response => {
+                commit("SET_ALL_SONGS", response.data.files)
             })
     }
+
 }
+
 
 
 const mutations = {
@@ -43,6 +54,9 @@ const mutations = {
     },
     SET_ALL_SONGS: function (state, songs) {
         state.songs = songs
+    },
+    SET_CURRENT_SONG: function (state, n) {
+        state.currentSong = n
     }
 }
 

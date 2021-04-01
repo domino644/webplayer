@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span @click="changeCurrentAlbum(id)">
     <img v-bind:src="getCoverSrc" alt="cos sie popsulo" />
   </span>
 </template>
@@ -13,16 +13,20 @@ export default {
   },
   props: ["propsId"],
   computed: {
-    getCurrentAlbum() {
-      return this.$store.getters.getCurrentAlbumIndex;
-    },
-    getSong(){
-      return this.$store.getters.getAllSongs
+    getAlbum() {
+      return this.$store.getters.getAllAlbums[this.id];
     },
     getCoverSrc() {
       return encodeURI(
-        `http://localhost:3000/static/mp3/${this.getCurrentAlbum}/${this.getSong}`
+        `http://localhost:3000/static/mp3/${this.getAlbum}/cover.jpg`
       );
+    },
+  },
+  methods: {
+    changeCurrentAlbum: function (n) {
+      this.$store.state.currentAlbum = n;
+      console.log(this.$store.state.currentAlbum);
+      this.$store.dispatch("action_getSongsNext", this.$store.getters.getAllAlbums[n]);
     },
   },
 };
