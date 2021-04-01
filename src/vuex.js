@@ -35,6 +35,7 @@ const actions = {
             .then(response => {
                 commit("SET_ALL_ALBUMS", response.data.folders)
                 commit("SET_ALL_SONGS", response.data.files)
+                console.log(state.songs)
             })
     },
     action_getSongsNext({ commit }, album) {

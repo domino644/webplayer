@@ -1,7 +1,10 @@
 <template>
   <div class="song-container">
-    <span class="album-name">{{ this.getAlbum }}</span>
-    <span class="song-name">{{ this.getSong[this.id] }}</span>
+    <span class="album-name">{{ this.getSong[this.id].album }}</span>
+    <span class="song-name"
+      >{{ this.getSong[this.id].file }}
+      {{ this.getSong[this.id].size }} MB</span
+    >
     <span class="bt">
       <img src="../../public/gpx/small-play-button.png" alt="cos sie popsulo" />
     </span>
@@ -47,6 +50,9 @@ export default {
   align-items: center;
   font-size: 3vh;
 }
+.song-container:hover {
+  border: 2px black solid;
+}
 .song-name {
   margin-left: auto;
 }
@@ -54,5 +60,8 @@ export default {
   width: 2vh;
   height: auto;
   margin-top: 2px;
+}
+.bt > img:hover {
+  transform: scale(125%);
 }
 </style>
