@@ -1,5 +1,6 @@
 <template>
   <div id="main">
+    <audio id="audio" src=""></audio>
     <div id="cont">
       <div id="cont-albums">
         <cover
@@ -26,29 +27,31 @@
         <div id="back-button">
           <img
             class="control-panel-button"
-            src="../public/gpx/back-button.png"
+            src="http://localhost:3000/static/gpx/back-button.png"
             alt="cos sie popsulo"
           />
         </div>
-        <div id="play-pause-button">
+        <div id="play-pause-button-cont">
           <img
+            id="play-pause-button"
             class="control-panel-button"
-            src="../public/gpx/pause-button.png"
+            v-bind:src="source"
             alt="cos sie popsulo"
+            @click="playOrPause()"
           />
         </div>
         <div id="forward-button">
           <img
             class="control-panel-button"
-            src="../public/gpx/forward-button.png"
+            src="http://localhost:3000/static/gpx/forward-button.png"
             alt="cos sie popsulo"
           />
         </div>
       </span>
       <span class="range-cont">
-        <span id="start-time">00:00</span>
+        <span id="start-time">{{ currentTime }}</span>
         <input type="range" name="song_range" id="song-range" value="0" />
-        <span id="end-time">03:01</span>
+        <span id="end-time">{{ fullTime }}</span>
       </span>
     </div>
   </div>
@@ -58,6 +61,13 @@
 import Cover from "./components/Cover.vue";
 import Song from "./components/Song.vue";
 export default {
+  data: function () {
+    return {
+      source: "http://localhost:3000/static/gpx/play-button.png",
+      currentTime: 0,
+      fullTime: 0,
+    };
+  },
   components: {
     Cover,
     Song,
@@ -74,7 +84,20 @@ export default {
       return this.$store.getters.getAllSongs;
     },
   },
-  methods: {},
+  methods: {
+    playOrPause: function () {
+      let audio = this.$store.getters.getAudio;
+      if (this.$store.state.isPlaying) {
+        this.source = "http://localhost:3000/static/gpx/play-button.png";
+        audio.pause();
+        this.$store.state.isPlaying = false;
+      } else {
+        this.source = "http://localhost:3000/static/gpx/pause-button.png";
+        audio.play();
+        this.$store.state.isPlaying = true;
+      }
+    },
+  },
 };
 </script>
 
@@ -139,7 +162,7 @@ h1 {
   width: 6vh;
   height: 6vh;
 }
-#play-pause-button {
+#play-pause-button-cont {
   margin-left: 10px;
   margin-right: 10px;
 }

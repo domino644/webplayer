@@ -2,11 +2,13 @@
   <div class="song-container">
     <span class="album-name">{{ this.getSong[this.id].album }}</span>
     <span class="song-name"
-      >{{ this.getSong[this.id].file }}
-      {{ this.getSong[this.id].size }} MB</span
+      >{{ getSong[this.id].file }} {{ getSong[this.id].size }} MB</span
     >
-    <span class="bt">
-      <img src="../../public/gpx/small-play-button.png" alt="cos sie popsulo" />
+    <span class="bt" @click="playSong()">
+      <img
+        src="http://localhost:3000/static/gpx/small-play-button.png"
+        alt="cos sie popsulo"
+      />
     </span>
   </div>
 </template>
@@ -34,6 +36,18 @@ export default {
           this.getSong[this.id]
         }`
       );
+    },
+  },
+  methods: {
+    playSong: function () {
+      let audio = this.$store.getters.getAudio;
+      audio.pause();
+      this.$store.state.isPlaying = false;
+      audio.src = `http://localhost:3000/static/mp3/${
+        this.getSong[this.id].album
+      }/${this.getSong[this.id].file}`;
+      audio.play();
+      this.$store.state.isPlaying = true;
     },
   },
 };

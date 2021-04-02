@@ -26,7 +26,7 @@ export default {
   methods: {
     changeCurrentAlbum: function (n) {
       this.$store.state.currentAlbum = n;
-      console.log(this.$store.state.currentAlbum);
+      //console.log(this.$store.state.currentAlbum);
       this.$store.dispatch(
         "action_getSongsNext",
         this.$store.getters.getAllAlbums[n]

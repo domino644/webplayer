@@ -9,7 +9,8 @@ const state = {
     albums: [],
     songs: [],
     currentAlbum: 0,
-    currentSong: ""
+    currentSong: "",
+    isPlaying: false
 }
 
 
@@ -25,6 +26,12 @@ const getters = {
     },
     getCurrentSong: function (state) {
         return state.currentSong
+    },
+    getAudio: function () {
+        return document.getElementById("audio")
+    },
+    getPlayPauseButton: function () {
+        return document.getElementById("play-pause-button")
     }
 }
 
