@@ -35,8 +35,13 @@
           <img
             id="play-pause-button"
             class="control-panel-button"
-            v-bind:src="source"
-            alt="cos sie popsulo"
+            v-bind:src="
+              this.$store.getters.getIsPlaying
+                ? 'http://localhost:3000/static/gpx/pause-button.png'
+                : 'http://localhost:3000/static/gpx/play-button.png'
+            "
+            alt="cos sie
+          popsulo"
             @click="playOrPause()"
           />
         </div>
@@ -49,9 +54,9 @@
         </div>
       </span>
       <span class="range-cont">
-        <span id="start-time">{{ currentTime }}</span>
+        <span id="start-time">{{ startTime }}</span>
         <input type="range" name="song_range" id="song-range" value="0" />
-        <span id="end-time">{{ fullTime }}</span>
+        <span id="end-time">{{ endTime }}</span>
       </span>
     </div>
   </div>
@@ -63,9 +68,12 @@ import Song from "./components/Song.vue";
 export default {
   data: function () {
     return {
-      source: "http://localhost:3000/static/gpx/play-button.png",
-      currentTime: 0,
-      fullTime: 0,
+      startTime: this.$store.getters.getIsLoaded
+        ? this.$store.getters.getAudio.currentTime
+        : null,
+      endTime: this.$store.getters.getIsLoaded
+        ? this.$store.getters.getAudio.currentTime
+        : null,
     };
   },
   components: {
@@ -88,11 +96,9 @@ export default {
     playOrPause: function () {
       let audio = this.$store.getters.getAudio;
       if (this.$store.state.isPlaying) {
-        this.source = "http://localhost:3000/static/gpx/play-button.png";
         audio.pause();
         this.$store.state.isPlaying = false;
       } else {
-        this.source = "http://localhost:3000/static/gpx/pause-button.png";
         audio.play();
         this.$store.state.isPlaying = true;
       }
