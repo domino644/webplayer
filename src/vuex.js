@@ -9,7 +9,7 @@ const state = {
     albums: [],
     songs: [],
     currentAlbum: 0,
-    currentSong: "",
+    currentSong: null,
     isPlaying: false,
     isLoaded: false
 }
@@ -25,11 +25,14 @@ const getters = {
     getCurrentAlbumIndex: function (state) {
         return state.currentAlbum
     },
-    getCurrentSong: function (state) {
+    getCurrentSongIndex: function (state) {
         return state.currentSong
     },
     getAudio: function () {
         return document.getElementById("audio")
+    },
+    getAudioSrc: function () {
+        return document.getElementById("audio-src")
     },
     getPlayPauseButton: function () {
         return document.getElementById("play-pause-button")
@@ -39,7 +42,7 @@ const getters = {
     },
     getIsLoaded: function (state) {
         return state.isLoaded
-    }
+    },
 }
 
 

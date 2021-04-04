@@ -45,6 +45,7 @@ export default {
       audio.src = `http://localhost:3000/static/mp3/${
         this.getSong[this.id].album
       }/${this.getSong[this.id].file}`;
+      this.$store.state.currentSong = this.id;
       audio.play();
       this.$store.state.isPlaying = true;
       this.$store.state.isLoaded = true;

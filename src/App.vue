@@ -29,6 +29,7 @@
             class="control-panel-button"
             src="http://localhost:3000/static/gpx/back-button.png"
             alt="cos sie popsulo"
+            @click="skipSong(-1)"
           />
         </div>
         <div id="play-pause-button-cont">
@@ -50,6 +51,7 @@
             class="control-panel-button"
             src="http://localhost:3000/static/gpx/forward-button.png"
             alt="cos sie popsulo"
+            @click="skipSong(1)"
           />
         </div>
       </span>
@@ -68,12 +70,8 @@ import Song from "./components/Song.vue";
 export default {
   data: function () {
     return {
-      startTime: this.$store.getters.getIsLoaded
-        ? this.$store.getters.getAudio.currentTime
-        : null,
-      endTime: this.$store.getters.getIsLoaded
-        ? this.$store.getters.getAudio.currentTime
-        : null,
+      startTime: null,
+      endTime: null,
     };
   },
   components: {
@@ -85,22 +83,43 @@ export default {
   },
   computed: {
     getAlbums() {
-      //console.log(this.$store.getters.getAllAlbums + " albumy");
       return this.$store.getters.getAllAlbums;
     },
     getSongs() {
       return this.$store.getters.getAllSongs;
     },
+    getCurrentSong() {
+      return this.$store.getters.getCurrentSongIndex;
+    },
+    getCurrentAlbum() {
+      return this.$store.getters.getCurrentAlbumIndex;
+    },
   },
   methods: {
     playOrPause: function () {
-      let audio = this.$store.getters.getAudio;
-      if (this.$store.state.isPlaying) {
-        audio.pause();
-        this.$store.state.isPlaying = false;
-      } else {
-        audio.play();
-        this.$store.state.isPlaying = true;
+      if (this.$store.getters.getIsLoaded) {
+        let audio = this.$store.getters.getAudio;
+        if (this.$store.state.isPlaying) {
+          audio.pause();
+          this.$store.state.isPlaying = false;
+        } else {
+          audio.play();
+          this.$store.state.isPlaying = true;
+        }
+      }
+    },
+    skipSong: function (n) {
+      if (this.$store.getters.getIsLoaded) {
+        if (
+          this.getAlbums[this.getCurrentAlbum] + n > this.getSongs.length &&
+          this.getAlbums[this.getCurrentAlbum] + n < 0
+        ) {
+          let audio = this.$store.getters.getAudio;
+          audio.pause();
+          audio.src = `http://localhost:3000/static/mp3/${
+            this.getAlbums[this.getCurrentAlbum]
+          }/${this.getSongs[this.getCurrentSong + n].file}`;
+        }
       }
     },
   },
@@ -167,6 +186,9 @@ h1 {
 .control-panel-button {
   width: 6vh;
   height: 6vh;
+}
+.control-panel-button:hover {
+  transform: scale(125%);
 }
 #play-pause-button-cont {
   margin-left: 10px;
