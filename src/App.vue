@@ -10,6 +10,14 @@
         ></cover>
       </div>
       <div id="cont-songs">
+        <button id="playlist-button">
+          <img
+            id="playlist-img"
+            src="http://localhost:3000/static/gpx/playlist.png"
+            alt="cos sie popsulo"
+          />
+        </button>
+        <div class="alert">Dodano do playlisty!</div>
         <span class="h1-cont">
           <h1>MASNY MUZ</h1>
         </span>
@@ -163,20 +171,21 @@ export default {
       this.$store.commit("SET_DURATION", e.target.duration);
       document.getElementById("time").max = e.target.duration;
     }.bind(this);
+    document.getElementById("time").onchange = function (e) {
+      document.getElementById("audio").currentTime = e.target.value;
+    };
     document.getElementById("audio").ontimeupdate = function (e) {
       this.$store.commit("SET_CURRENT_TIME", e.target.currentTime);
       document.getElementById("time").value = e.target.currentTime;
     }.bind(this);
-    document.getElementById("time").onchange = function (e) {
-      document.getElementById("audio").currentTime = e.target.value;
-    };
+
     document.getElementById("volume").onchange = function (e) {
       let audio = document.getElementById("audio");
       let audioImage = document.getElementById("audioimage");
       audio.volume = e.target.value;
-      if (audio.volume >= 0.75) {
+      if (audio.volume >= 0.6) {
         audioImage.src = "http://localhost:3000/static/gpx/high-volume.png";
-      } else if (audio.volume < 0.75 && audio.volume >= 0.25) {
+      } else if (audio.volume < 0.6 && audio.volume >= 0.25) {
         audioImage.src = "http://localhost:3000/static/gpx/medium-volume.png";
       } else if (audio.volume < 0.25 && audio.volume > 0) {
         audioImage.src = "http://localhost:3000/static/gpx/low-volume.png";
@@ -400,5 +409,37 @@ input[type="range"]::-moz-range-track {
 .volume-cont > button {
   background-color: transparent;
   outline: none;
+}
+#playlist-img {
+  height: 5vh;
+  width: 5vh;
+}
+#playlist-button {
+  position: absolute;
+  top: 2vh;
+  left: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px black;
+  background-color: transparent;
+  padding: 1vh 1vh 0.5vh 1vh;
+}
+#playlist-button:hover {
+  background-color: lightcyan;
+  border: solid 2px black;
+}
+.alert {
+  color: white;
+  background-color: black;
+  width: 15vh;
+  height: 7vh;
+  border-radius: 6px;
+  text-align: center;
+  position: absolute;
+  top: 1vh;
+  right: 1vh;
+  opacity: 0%;
+  font-size: 2vh;
 }
 </style>

@@ -67,6 +67,12 @@ const actions = {
             .then(response => {
                 commit("SET_ALL_SONGS", response.data.files)
             })
+    },
+    action_setPlaylistSong(data) {
+        axios.post("http://localhost:3000/playlist", data)
+            .then(response => {
+                console.log(response)
+            })
     }
 
 }

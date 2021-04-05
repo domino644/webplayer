@@ -11,6 +11,12 @@
         alt="cos sie popsulo"
       />
     </span>
+    <span class="bt" @click="addToPlaylist()">
+      <img
+        src="http://localhost:3000/static/gpx/playlist-add.png"
+        alt="cos sie popsulo"
+      />
+    </span>
   </div>
 </template>
 
@@ -56,6 +62,14 @@ export default {
       this.$store.state.isLoaded = true;
       this.$store.state.duration = audio.duration;
     },
+    addToPlaylist: function () {
+      document
+        .querySelector(".alert")
+        .animate(
+          [{ opacity: "0%" }, { opacity: "100%" }, { opacity: "0%" }],
+          500
+        );
+    },
   },
 };
 </script>
@@ -65,7 +79,6 @@ export default {
   width: 100%;
   height: 10vh;
   background-color: white;
-  margin-top: 5px;
   margin-bottom: 5px;
   display: flex;
   align-items: center;
@@ -86,7 +99,6 @@ export default {
   align-items: center;
   height: 100%;
   border-left: solid black 1px;
-  margin-left: 4vh;
   padding-left: 1vh;
   padding-right: 1vh;
 }
