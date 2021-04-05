@@ -2,7 +2,8 @@
   <div class="song-container">
     <span class="album-name">{{ this.getSong[this.id].album }}</span>
     <span class="song-name"
-      >{{ getSong[this.id].file }} {{ getSong[this.id].size }} MB</span
+      >{{ getSong[this.id].file.split(".mp3").join("") }}
+      <p>{{ getSong[this.id].size }} MB</p></span
     >
     <span class="bt" @click="playSong()">
       <img
@@ -45,10 +46,15 @@ export default {
       audio.src = `http://localhost:3000/static/mp3/${
         this.getSong[this.id].album
       }/${this.getSong[this.id].file}`;
+      audio.load();
       this.$store.state.currentSong = this.id;
+      this.$store.state.currentSongName = this.getSong[this.id].file
+        .split(".mp3")
+        .join("");
       audio.play();
       this.$store.state.isPlaying = true;
       this.$store.state.isLoaded = true;
+      this.$store.state.duration = audio.duration;
     },
   },
 };
@@ -71,10 +77,22 @@ export default {
 .song-name {
   margin-left: auto;
 }
+.song-name > p {
+  font-size: 1vh;
+}
+.bt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border-left: solid black 1px;
+  margin-left: 4vh;
+  padding-left: 1vh;
+  padding-right: 1vh;
+}
 .bt > img {
-  width: 2vh;
+  width: 3vh;
   height: auto;
-  margin-top: 2px;
 }
 .bt > img:hover {
   transform: scale(125%);

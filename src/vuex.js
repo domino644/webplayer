@@ -10,8 +10,11 @@ const state = {
     songs: [],
     currentAlbum: 0,
     currentSong: null,
+    currentSongName: "",
     isPlaying: false,
-    isLoaded: false
+    isLoaded: false,
+    currentTime: null,
+    duration: null
 }
 
 
@@ -31,9 +34,6 @@ const getters = {
     getAudio: function () {
         return document.getElementById("audio")
     },
-    getAudioSrc: function () {
-        return document.getElementById("audio-src")
-    },
     getPlayPauseButton: function () {
         return document.getElementById("play-pause-button")
     },
@@ -43,6 +43,13 @@ const getters = {
     getIsLoaded: function (state) {
         return state.isLoaded
     },
+    getDuration: function (state) {
+        return state.duration
+    },
+    getCurrentTime: function (state) {
+        return state.currentTime
+    }
+
 }
 
 
@@ -75,7 +82,14 @@ const mutations = {
     },
     SET_CURRENT_SONG: function (state, n) {
         state.currentSong = n
+    },
+    SET_CURRENT_TIME: function (state, n) {
+        state.currentTime = n
+    },
+    SET_DURATION: function (state, n) {
+        state.duration = n
     }
+
 }
 
 
