@@ -1,9 +1,9 @@
 <template>
     <div class="song-container">
-        <span class="album-name">{{ this.getSong[this.id].album }}</span>
+        <span class="album-name">{{ this.getSong[this.id].data.album }}</span>
         <span class="song-name"
-            >{{ getSong[this.id].file.split(".mp3").join("") }}
-            <p>{{ getSong[this.id].size }} MB</p></span
+            >{{ getSong[this.id].data.file.split(".mp3").join("") }}
+            <p>{{ getSong[this.id].data.size }} MB</p></span
         >
         <span class="bt" @click="playSong()">
             <img
@@ -11,9 +11,9 @@
                 alt="cos sie popsulo"
             />
         </span>
-        <span class="bt" @click="addToPlaylist()">
+        <span class="bt" @click="deleteSong()">
             <img
-                src="http://localhost:3000/static/gpx/playlist-add.png"
+                src="http://localhost:3000/static/gpx/delete.png"
                 alt="cos sie popsulo"
             />
         </span>
@@ -25,23 +25,19 @@ export default {
     data() {
         return {
             id: this.propsId,
+            // db_id: this.dbId,
         };
     },
     props: ["propsId"],
     computed: {
-        getAlbum() {
-            return this.$store.getters.getAllAlbums[
-                this.$store.getters.getCurrentAlbumIndex
-            ];
-        },
         getSong() {
-            return this.$store.getters.getAllSongs;
+            return this.$store.getters.getPlaylist;
         },
         getSongSrc() {
             return encodeURI(
-                `http://localhost:3000/static/mp3/${this.getAlbum}/${
-                    this.getSong[this.id]
-                }`
+                `http://localhost:3000/static/mp3/${
+                    this.getSong[this.id].data.album
+                }/${this.getSong[this.id].data.file}`
             );
         },
     },
@@ -50,11 +46,11 @@ export default {
             let audio = this.$store.getters.getAudio;
             audio.pause();
             audio.src = `http://localhost:3000/static/mp3/${
-                this.getSong[this.id].album
-            }/${this.getSong[this.id].file}`;
+                this.getSong[this.id].data.album
+            }/${this.getSong[this.id].data.file}`;
             audio.load();
             this.$store.state.currentSong = this.id;
-            this.$store.state.currentSongName = this.getSong[this.id].file
+            this.$store.state.currentSongName = this.getSong[this.id].data.file
                 .split(".mp3")
                 .join("");
             audio.play();
@@ -62,20 +58,15 @@ export default {
             this.$store.state.isLoaded = true;
             this.$store.state.duration = audio.duration;
         },
-        addToPlaylist: function() {
+        deleteSong: function() {
             var data = {
-                album: this.getSong[this.id].album,
-                file: this.getSong[this.id].file,
-                size: this.getSong[this.id].size,
+                album: this.getSong[this.id].data.album,
+                file: this.getSong[this.id].data.file,
+                size: this.getSong[this.id].data.size,
+                // db_id: this.db_id,
             };
-            this.$store.dispatch("action_setPlaylistSong", data);
-            document
-                .querySelector(".alert")
-                .animate(
-                    [{ opacity: "0%" }, { opacity: "100%" }, { opacity: "0%" }],
-                    500
-                );
-            console.log(this.$store.state.playlist);
+            console.log(data);
+            this.$store.dispatch("action_deletePlaylistSong", data);
         },
     },
 };

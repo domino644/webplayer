@@ -1,6 +1,11 @@
 <template>
   <span class="img-cont" @click="changeCurrentAlbum(id)">
     <img v-bind:src="getCoverSrc" alt="cos sie popsulo" />
+    <img
+      id="zapasowy"
+      src="http://localhost:3000/static/gpx/cover.png"
+      alt="cos sie popsulo"
+    />
     <span class="tooltip">{{ getAlbum }}</span>
   </span>
 </template>
@@ -31,6 +36,7 @@ export default {
         "action_getSongsNext",
         this.$store.getters.getAllAlbums[n]
       );
+      this.$store.state.isPlaylist = false;
     },
   },
 };
@@ -39,8 +45,19 @@ export default {
 <style scoped>
 img {
   margin-top: 5px;
+  padding-right: 15px;
   width: 200px;
   height: 200px;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+#zapasowy {
+  z-index: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .img-cont {
   position: relative;
@@ -51,13 +68,13 @@ img {
 .img-cont .tooltip {
   visibility: hidden;
   width: 200px;
-  background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   position: fixed;
   z-index: 3;
   bottom: 5%;
+  background-color: black;
   left: 0px;
 }
 
